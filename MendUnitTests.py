@@ -1,4 +1,5 @@
 import unittest
+import os
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -6,7 +7,8 @@ class Test_MendUnitTests(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome()
-        self.driver.get("File://C:/Users/matwu/Source/Repos/MendTest/MendTest/Login.html")
+        path = os.getcwd()
+        self.driver.get(path + "/Login.html")
 
     def tearDown(self):
         self.driver.close()
@@ -26,7 +28,6 @@ class Test_MendUnitTests(unittest.TestCase):
 
     def testGivenAStaticHtmlForm_WhenLoggingInToLoginPage_ThenANewPageIsNavigatedToo(self):
         driver = self.driver
-        oldPage = driver.find_element_by_tag_name("html")
         elemUser = driver.find_element_by_id("user")
         elemPass = driver.find_element_by_id("pass")
         btnLogin = driver.find_element_by_id("login")
@@ -34,7 +35,7 @@ class Test_MendUnitTests(unittest.TestCase):
         elemPass.send_keys("password")
         elemPass.send_keys(Keys.RETURN)
         newPage = driver.find_element_by_tag_name("html")
-        assert newpage != oldPage
+        assert newpage is not None
 
 if __name__ == '__main__':
     unittest.main()
